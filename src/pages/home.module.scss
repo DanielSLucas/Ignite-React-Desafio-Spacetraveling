@@ -1,1 +1,49 @@
-// TODO
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.posts {
+  max-width: 720px;
+  margin: 4rem;
+
+  article {
+    max-width: 700px;
+
+    & + article {
+      margin-top: 3rem;
+    }
+
+    strong {
+      font-size: 1.75rem;
+      color: var(--gray-100);
+    }
+
+    p {
+      font-size: 1.125rem;
+      margin: 0.5rem 0 1.5rem;
+    }
+
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      span {
+        color: var(--gray-500);
+
+        display: flex;
+        align-items: center;
+
+        svg {
+          margin-right: 0.5rem;
+        }
+
+        & + span {
+          margin-left: 1.5rem;
+        }
+      }
+    }
+  }
+}
