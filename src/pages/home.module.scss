@@ -2,17 +2,60 @@
   max-width: 1120px;
   margin: 0 auto;
   padding: 0 2rem;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  header {
+    width: 100%;
+    max-width: 720px;
+    margin-top: 5rem;
+
+    display: flex;
+    justify-content: flex-start;
+  }
+}
+
+.content {
+  width: 100%;
+  max-width: 720px;
+
+  button  {
+    margin-top: 4rem;
+    background: transparent;
+    border: none;
+
+    color: var(--pink-500);
+    font-size: 1.125rem;
+    font-weight: 600;
+
+    transition: filter 0.2s;
+
+    &:hover {
+      filter: brightness(0.9);
+    }
+  }
 }
 
 .posts {
-  max-width: 720px;
-  margin: 4rem;
+  margin-top: 4rem;
 
-  article {
+  a {
+    width: 100%;
     max-width: 700px;
+    display: block;
 
-    & + article {
+    transition: color 0.2s;
+
+    & + a {
       margin-top: 3rem;
+    }
+
+    &:hover strong {
+      color: var(--pink-500);
     }
 
     strong {
