@@ -1,5 +1,5 @@
 .header {
-  // max-width: 720px;
-  // margin-top: 5rem;
-  // margin-left: 4rem;
+  &:hover {
+    cursor: pointer;
+  }
 }

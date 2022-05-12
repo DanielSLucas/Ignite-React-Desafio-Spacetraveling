@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { GetStaticProps } from 'next';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -43,6 +45,10 @@ export default function Home({ postsPagination }: HomeProps) {
     }
   }
 
+  function formatDate(date: string): string {
+    return format(new Date(date), 'dd MMM yyyy', { locale: ptBR });
+  }
+
   return (
     <div className={styles.container}>
       <Header />
@@ -56,7 +62,7 @@ export default function Home({ postsPagination }: HomeProps) {
                 <footer>
                   <span>
                     <FiCalendar />
-                    {post.first_publication_date}
+                    {formatDate(post.first_publication_date)}
                   </span>
                   <span>
                     <FiUser />
@@ -87,13 +93,7 @@ export const getStaticProps: GetStaticProps = async ({ previewData }) => {
     results: postsResponse.results.map(post => {
       return {
         uid: post.uid,
-        first_publication_date: new Date(
-          post.first_publication_date
-        ).toLocaleDateString('pt-BR', {
-          day: '2-digit',
-          month: 'long',
-          year: 'numeric',
-        }),
+        first_publication_date: post.first_publication_date,
         data: {
           title: post.data.title,
           subtitle: post.data.subtitle,

@@ -1,6 +1,8 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/no-danger */
 import { asText } from '@prismicio/helpers';
+import { format, parseISO } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
@@ -45,6 +47,12 @@ export default function Post({ post }: PostProps) {
     return Math.ceil(totalWords / 200);
   }, [post.data.content]);
 
+  const publicationDate = useMemo(() => {
+    return format(new Date(post.first_publication_date), 'dd MMM yyyy', {
+      locale: ptBR,
+    });
+  }, [post.first_publication_date]);
+
   if (router.isFallback) {
     return <p>Carregando...</p>;
   }
@@ -60,7 +68,7 @@ export default function Post({ post }: PostProps) {
             <div>
               <span>
                 {' '}
-                <FiCalendar /> {post.first_publication_date}
+                <FiCalendar /> {publicationDate}
               </span>
               <span>
                 {' '}
@@ -102,7 +110,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
   });
 
-  // TODO
   return {
     paths,
     fallback: true,
@@ -115,15 +122,11 @@ export const getStaticProps = async ({ req, params }) => {
   const response = await prismic.getByUID('post', String(params.slug), {});
 
   const post = {
-    first_publication_date: new Date(
-      response.first_publication_date
-    ).toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric',
-    }),
+    uid: response.uid,
+    first_publication_date: response.first_publication_date,
     data: {
       title: response.data.title,
+      subtitle: response.data.subtitle,
       banner: {
         url: response.data.banner.url,
       },
